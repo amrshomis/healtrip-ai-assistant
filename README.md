@@ -169,6 +169,7 @@ npm run dev                  # → http://localhost:3000
 | `PORT`           | Backend port (default: 3001)                           | ❌       |
 | `DATABASE_URL`   | SQLite path (default: file:./dev.db)                   | ❌       |
 | `FRONTEND_URL`   | Frontend URL for CORS (default: http://localhost:3000) | ❌       |
+| `NODE_ENV`       | Environment mode (development/production)              | ❌       |
 
 ## 🌐 API Endpoints
 
