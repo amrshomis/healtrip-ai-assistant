@@ -1,0 +1,59 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Specialty {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  nameAr      String
+  description String?
+  doctors     Doctor[]
+}
+
+model Doctor {
+  id              String           @id @default(uuid())
+  name            String
+  nameAr          String
+  specialty       Specialty        @relation(fields: [specialtyId], references: [id])
+  specialtyId     String
+  yearsExp        Int
+  languages       String           // JSON array: ["English","Arabic"]
+  rating          Float            @default(0)
+  bio             String?
+  bioAr           String?
+  consultationFee Float?
+  availability    String?          // JSON: available days/hours
+  hospitals       DoctorHospital[]
+  createdAt       DateTime         @default(now())
+}
+
+model Hospital {
+  id            String           @id @default(uuid())
+  name          String
+  nameAr        String
+  city          String
+  cityAr        String
+  country       String
+  countryAr     String
+  address       String?
+  rating        Float            @default(0)
+  accreditation String?
+  specialties   String           // JSON array of specialty names
+  doctors       DoctorHospital[]
+  createdAt     DateTime         @default(now())
+}
+
+model DoctorHospital {
+  id         String   @id @default(uuid())
+  doctor     Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId   String
+  hospital   Hospital @relation(fields: [hospitalId], references: [id])
+  hospitalId String
+
+  @@unique([doctorId, hospitalId])
+}
