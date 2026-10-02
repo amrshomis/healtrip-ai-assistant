@@ -1,9 +1,12 @@
 const getApiUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
   if (typeof window !== 'undefined') {
-    // Dynamic IP detection for seamless mobile testing
+    // Dynamic IP detection for seamless local mobile testing (fallback)
     return `http://${window.location.hostname}:3001`;
   }
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  return 'http://localhost:3001';
 };
 
 const API_URL = getApiUrl();
